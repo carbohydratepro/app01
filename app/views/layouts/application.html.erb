@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>bookers2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/204ded6ce9.js" crossorigin="anonymous"></script>
+  </head>
+
+  <body class="d-flex flex-column vh-100">
+    <header class="bg-dark text-white">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <% if user_signed_in? %>
+            <a class="nav-link text-light" href="/book/index"><h3>Bookers</h3></a>
+          <% else %>
+            <a class="nav-link text-light" href="/"><h3>Bookers</h3></a>
+          <% end %>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+            <% if user_signed_in? %>
+              <%= link_to ' Home', user_path(current_user.id), class: 'fas fa-home nav-link text-white' %>
+              <%= link_to ' Users', users_path, class: 'fas fa-users nav-link text-white' %>
+              <%= link_to ' Books', books_path, class: 'fas fa-book-open nav-link text-white' %>
+              <%= link_to ' logout', destroy_user_session_path, method: :delete, class: 'fas fa-sign-out-alt nav-link text-white' %>
+            <% else %>
+              <%= link_to ' Home', root_path, class: 'fas fa-home nav-link text-white' %>
+              <%= link_to ' About', home_about_path, class: 'fas fa-link nav-link text-white' %>
+              <%= link_to " sign up", new_user_registration_path, class: 'fas fa-user-plus nav-link text-white' %>
+              <%= link_to " login", new_user_session_path, class: 'fas fa-sign-in-alt nav-link text-white' %>
+            <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="mb-auto">
+      <% flash.each do |key, value| %>
+        <%= content_tag(:div, value, class: "#{key}") %>
+      <% end %>
+      <%= yield %>
+    </main>
+    <footer class="bg-white text-dark pt-5 pb-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <p class="text-center">CopyRight Infratop.inc</p>
+          </div>
+        </div>
+      </div>
+
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <%= render 'books/list', book: @booknew, user: @user %>
+      <div class="col-md-8 offset-md-1">
+        <h1>Book detail</h1>
+        <table class="table">
+          <tbody>
+              <tr>
+                <td>
+                  <%= attachment_image_tag @book.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image_user.jpg" %></br>
+                  <%= link_to  @book.user.name, user_path(@book.user_id) %>
+                </td>
+                <td><%= link_to  @book.title, book_path(@book) %></td>
+                <td><%= @book.body %></td>
+                <% if @book.user == current_user %>
+                  <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-success" %></td>
+                  <td><%= link_to "Destroy", book_path(@book), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?"} %></td>
+                <% end %>
+                <% if @book.favorited_by?(current_user) %>
+                  <p>
+                    <td>
+                      <%= link_to book_favorites_path(@book), method: :delete do %>
+                        <p class="text-danger">
+                          <i class="fas fa-heart"></i><%= @book.favorites.count %>
+                        </p>
+                      <% end %>
+                    </td>
+                  </p>
+                  <% else %>
+                  <p>
+                    <td>
+                      <%= link_to book_favorites_path(@book), method: :post do %>
+                        <p class="text-primary">
+                          <i class="fas fa-heart"></i><%= @book.favorites.count %>
+                        </p>
+                      <% end %>
+                    </td>
+                  </p>
+                <% end %>
+                <td><p>コメント数：<%= @book.book_comments.count %></p></td>
+              </tr>
+          </tbody>
+        </table>
+        <table class="table">
+          <tbody>
+              <tr>
+                <td>
+                <% @book.book_comments.each do |book_comment| %>
+                  <%= attachment_image_tag @book.user, :profile_image, :fill, 50, 50, format: 'jpeg', fallback: "no_image_user.jpg" %></br>
+                  <%= link_to  book_comment.user.name, user_path(book_comment.user_id) %>
+                </td>
+                <td><%= book_comment.comment %></td>
+                <% if book_comment.user == current_user %>
+                  <td><%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), class: "btn btn-danger", method: :delete %></td>
+                <% end %>
+                <% end %>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+        <div>
+          <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
+            <%= f.text_area :comment, size: "80x10" %></br>
+            <%= f.submit "送信" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
