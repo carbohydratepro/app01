@@ -1,0 +1,15 @@
+# rails5 => rails6
+#
+# gemfile : rails5 => rails6
+#
+# bundle install rails
+#
+# bin/rails app:update
+#
+# yarn install
+#
+# bundle update
+#
+# bin/rails app:update
+#
+

@@ -1,0 +1,8 @@
+# bundle install
+# rails webpacker:install
+# rails webpacker:compile
+# rails db:migrate
+# rails db:migrate RAILS_ENV=test
+# bundle exec rspec spec/ --format documentation
+#
+#  config.hosts << "xxxxxxxxxxxyyyyyyyyyyyzzzzzzzzzz.vfs.cloud9.us-east-1.amazonaws.com"
